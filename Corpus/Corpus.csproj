@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CorpAnalyzer.cs" />
     <Compile Include="CorpEle.cs" />
     <Compile Include="Corpora.cs" />
     <Compile Include="Program.cs" />

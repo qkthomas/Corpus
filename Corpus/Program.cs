@@ -14,14 +14,22 @@ namespace Corpus
     {
         static void Main(string[] args)
         {
-            SerializerTest();
-            DeserializerTest();
+            CorporaIrrigationTest();
         }
 
         static void SerializerTest()
         {
             Corpora cops = new Corpora();
             cops.Init();
+            XmlSerializer ser = new XmlSerializer(typeof(Corpora));
+            string filename = "data.xml";
+            TextWriter writer = new StreamWriter(filename);
+            ser.Serialize(writer, cops);
+            writer.Close();
+        }
+
+        static void SerializerTest(Corpora cops)
+        {
             XmlSerializer ser = new XmlSerializer(typeof(Corpora));
             string filename = "data.xml";
             TextWriter writer = new StreamWriter(filename);
@@ -72,6 +80,13 @@ namespace Corpus
                     goon = false;
                 }
             }
+        }
+
+        static void CorporaIrrigationTest()
+        {
+            string filepath = @"E:\Dropbox\Codes Hub\C#\Corpus\text samples\english.txt";
+            Corpora cops = CorpAnalyzer.ExtractCorporaFromFile(filepath);
+            SerializerTest(cops);
         }
     }
 }
