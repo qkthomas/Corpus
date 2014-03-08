@@ -12,7 +12,7 @@ namespace Corpus
     {
         public static Corpora ExtractCorporaFromFile(string filename)
         {
-            string language = filename.Replace(".txt", "");
+            string language = Path.GetFileName(filename).Replace(".txt", "");
             Corpora cops = new Corpora();
             cops.Init(language);
             StreamReader file = new StreamReader(filename);
