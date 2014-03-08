@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace XmlSerializer_Test
+namespace Corpus
 {
     [XmlRoot("Corpora_Element")]
     public class CorpEle
