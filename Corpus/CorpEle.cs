@@ -11,9 +11,9 @@ namespace Corpus
     public class CorpEle
     {
         [XmlIgnore]
-        public readonly char mFirstCharacter;
+        public char mFirstCharacter;
         [XmlIgnore]
-        public readonly char mSecondCharacter;
+        public char mSecondCharacter;
         [XmlIgnore]
         private readonly double mSmoothing = 0.5;
         [XmlIgnore]
@@ -33,21 +33,21 @@ namespace Corpus
         public string FirstCharacter
         {
             get { return this.mFirstCharacter.ToString(); }
-            set { }
+            set { this.mFirstCharacter = value[0]; }    //To find a better way or structure rather than just put value[0]
         }
 
         [XmlElement("Second_Character")]
         public string SecondCharacter
         {
             get { return this.mSecondCharacter.ToString(); }
-            set { }
+            set { this.mSecondCharacter = value[0]; }
         }
 
         [XmlElement("Occured_Frequency")]
         public string Frequency
         {
             get { return this.mFrequency.ToString(); }
-            set { }
+            set { this.mFrequency = Convert.ToInt32(value); }
         }
 
     }

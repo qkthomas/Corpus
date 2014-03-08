@@ -13,6 +13,10 @@ namespace Corpus
 
         public Corpora()
         {
+        }
+
+        public void Init()
+        {
             int first_char = (int)'a';
             for (int i = 0; i < 26; i++)
             {

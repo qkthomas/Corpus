@@ -14,17 +14,34 @@ namespace Corpus
     {
         static void Main(string[] args)
         {
+            SerializerTest();
+            DeserializerTest();
+        }
 
-            #region Serializer Test
+        static void SerializerTest()
+        {
             Corpora cops = new Corpora();
+            cops.Init();
             XmlSerializer ser = new XmlSerializer(typeof(Corpora));
             string filename = "data.xml";
             TextWriter writer = new StreamWriter(filename);
-            ser.Serialize(writer, cops); 
-            #endregion
+            ser.Serialize(writer, cops);
+            writer.Close();
+        }
 
-            #region regex test
-            /*
+        static void DeserializerTest()
+        {
+            Corpora cops = new Corpora();
+            XmlSerializer ser = new XmlSerializer(typeof(Corpora));
+            string filename = "data.xml";
+            TextReader reader = new StreamReader(filename);
+            cops = ser.Deserialize(reader) as Corpora;
+            reader.Close();
+            int bp = 0;
+        }
+
+        static void RegexTest()
+        {
             string pattern = @"[^a-z]";
             Regex defaultRegex = new Regex(pattern);
             bool goon = true;
@@ -55,8 +72,6 @@ namespace Corpus
                     goon = false;
                 }
             }
-             * */
-            #endregion
         }
     }
 }
