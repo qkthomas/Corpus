@@ -12,8 +12,9 @@ namespace Corpus
     {
         public static Corpora ExtractCorporaFromFile(string filename)
         {
+            string language = filename.Replace(".txt", "");
             Corpora cops = new Corpora();
-            cops.Init();
+            cops.Init(language);
             StreamReader file = new StreamReader(filename);
             string line;
             while((line = file.ReadLine()) != null)
@@ -64,6 +65,29 @@ namespace Corpus
                 char second_char = tuple_char_char.Item2;
                 cops.IrrigateBigram(first_char, second_char);
             }
+        }
+
+        public static string AnalyzeTextFromCorporas(List<Corpora> lst_cops, string inputed_text)
+        {
+            List<Tuple<char, char>> bigrams_to_be_analyzed = BuildBigramsFromString(inputed_text);
+            Tuple<string, double> pair_highest_language_score = Tuple.Create<string, double>("", double.MinValue);
+            foreach(Corpora cops in lst_cops)
+            {
+                double score = 0;
+                foreach (Tuple<char, char> bigram in bigrams_to_be_analyzed)
+                {
+                    char first_char = bigram.Item1;
+                    char second_char = bigram.Item2;
+                    double prob = cops.ProbabilityOfBigram(first_char, second_char);
+                    //do some output here
+                    score += Math.Log10(prob);
+                }
+                if (score >= pair_highest_language_score.Item2)
+                {
+                    pair_highest_language_score = Tuple.Create<string, double>(cops.Language, score);
+                }
+            }
+            return pair_highest_language_score.Item1;
         }
     }
 }
