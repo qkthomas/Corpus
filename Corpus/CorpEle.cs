@@ -15,8 +15,6 @@ namespace Corpus
         [XmlIgnore]
         public char mSecondCharacter;
         [XmlIgnore]
-        private readonly double mSmoothing = 0.5;
-        [XmlIgnore]
         private int mFrequency = 0;
 
         public CorpEle(char first_char, char second_char)
@@ -33,6 +31,12 @@ namespace Corpus
         {
             ele.mFrequency++;
             return ele;
+        }
+
+        //because the Frequency property is set as string type, so this method is necessary for retrieving this.mFrequency
+        public int getFrequency()
+        {
+            return this.mFrequency;
         }
 
         [XmlElement("First_Character")]
