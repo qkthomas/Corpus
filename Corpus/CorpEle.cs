@@ -29,6 +29,12 @@ namespace Corpus
         {
         }
 
+        public static CorpEle operator ++(CorpEle ele)
+        {
+            ele.mFrequency++;
+            return ele;
+        }
+
         [XmlElement("First_Character")]
         public string FirstCharacter
         {
