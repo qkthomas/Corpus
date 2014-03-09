@@ -74,6 +74,7 @@ namespace Corpus
             Tuple<string, double> pair_highest_language_score = Tuple.Create<string, double>("", double.MinValue);
             foreach(Corpora cops in lst_cops)
             {
+                Program.mLogger.WriteLine(cops.Language + ":");
                 double score = 0;
                 foreach (Tuple<char, char> bigram in bigrams_to_be_analyzed)
                 {
@@ -81,14 +82,15 @@ namespace Corpus
                     char second_char = bigram.Item2;
                     double prob = cops.ProbabilityOfBigram(first_char, second_char);
                     //do some output here
-                    Console.Write(cops.Language + ": Probability of Bigram " + bigram + " = " + prob + " ==> ");
+                    Program.mLogger.Write(cops.Language + ": Probability of Bigram " + bigram + " = " + prob + " ==> ");
                     score += Math.Log10(prob);
-                    Console.WriteLine("log prob of sequence so far: " + score);
+                    Program.mLogger.WriteLine("log prob of sequence so far: " + score);
                 }
                 if (score >= pair_highest_language_score.Item2)
                 {
                     pair_highest_language_score = Tuple.Create<string, double>(cops.Language, score);
                 }
+                Program.mLogger.WriteLine("");
             }
             return pair_highest_language_score.Item1;
         }
