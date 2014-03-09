@@ -92,5 +92,41 @@ namespace Corpus
             }
             return pair_highest_language_score.Item1;
         }
+
+        public static string AnalyzeTextFromCorporasWithDemandedOutput(List<Corpora> lst_cops, string inputed_text)
+        {
+            string processed_input_line = TrimNoneAlphabetChars(inputed_text);
+            List<Tuple<char, char>> bigrams_to_be_analyzed = BuildBigramsFromString(processed_input_line);
+            Dictionary<Corpora, double> dict_scores_of_cops = new Dictionary<Corpora, double>();
+            foreach (Corpora cops in lst_cops)
+            {
+                dict_scores_of_cops.Add(cops, 0);
+            }
+            foreach (Tuple<char, char> bigram in bigrams_to_be_analyzed)
+            {
+                Program.mLogger.WriteLine("Bigram: " + bigram);
+                foreach (Corpora cops in lst_cops)
+                {
+                    char first_char = bigram.Item1;
+                    char second_char = bigram.Item2;
+                    double prob = cops.ProbabilityOfBigram(first_char, second_char);
+                    double score_of_this_prob = Math.Log10(prob);
+                    dict_scores_of_cops[cops] = dict_scores_of_cops[cops] + score_of_this_prob;
+                    Program.mLogger.WriteLine(cops.Language + ": P" + bigram + " = " + prob + " ==> log prob of sequence so far: " + dict_scores_of_cops[cops]);
+                }
+                Program.mLogger.WriteLine("");
+            }
+
+            Tuple<string, double> pair_highest_language_score = Tuple.Create<string, double>("", double.MinValue);
+            foreach (var item in dict_scores_of_cops)
+            {
+                if (pair_highest_language_score.Item2 <= item.Value)
+                {
+                    pair_highest_language_score = Tuple.Create<string, double>(item.Key.Language, item.Value);
+                }
+            }
+
+            return pair_highest_language_score.Item1;
+        }
     }
 }

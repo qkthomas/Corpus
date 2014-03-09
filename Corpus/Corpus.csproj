@@ -60,6 +60,7 @@
     <Compile Include="CorpAnalyzer.cs" />
     <Compile Include="CorpEle.cs" />
     <Compile Include="Corpora.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,16 +13,18 @@ namespace Corpus
 {
     class Program
     {
+        public static Logger mLogger = new Logger();
         [STAThreadAttribute]
         static void Main(string[] args)
         {
             while (true)
             {
-                Console.WriteLine("Enter 1 to Generate Corporas From Text Files to a Choosen Folder");
-                Console.WriteLine("Enter 2 to Analyze Some Sentences From Corporas Files");
-                Console.WriteLine("Enter 3 to Exit");
-                Console.Write("Please Enter Your Chose: ");
+                mLogger.WriteLine("Enter 1 to Generate Corporas From Text Files to a Choosen Folder");
+                mLogger.WriteLine("Enter 2 to Analyze Some Sentences with Data in Corporas Files");
+                mLogger.WriteLine("Enter 3 to Exit");
+                mLogger.Write("Please Enter Your Chose: ");
                 string inputed_command = Console.ReadLine();
+                mLogger.WriteLine(inputed_command);
                 if ("1" == inputed_command)
                 {
                     FuncBuildCorporas();
@@ -33,9 +35,11 @@ namespace Corpus
                 }
                 else if ("3" == inputed_command)
                 {
+                    mLogger.WriteLine("Program Exits");
                     break;
                 }
             }
+            mLogger.Close();
         }
 
         static void FuncAnalyzeSentence()
@@ -55,11 +59,16 @@ namespace Corpus
                 List<Corpora> lst_cops = FuncDeserializeCorporaFiles(lst_filepaths);
                 while (true)
                 {
-                    Console.Write("Please input a sentence: ");
+                    mLogger.Write("Please input a sentence: ");
                     string input_line = Console.ReadLine();
-                    string lang = CorpAnalyzer.AnalyzeTextFromCorporas(lst_cops, input_line);
-                    Console.Write("It is " + lang + " continue?(y/n)");
-                    if ("n" == Console.ReadLine())
+                    mLogger.WriteLine(input_line);
+                    mLogger.WriteLine("");
+                    string lang = CorpAnalyzer.AnalyzeTextFromCorporasWithDemandedOutput(lst_cops, input_line);
+                    mLogger.Write("It is " + lang + " continue?(y/n)");
+                    string inputed_command = Console.ReadLine();
+                    mLogger.WriteLine(inputed_command);
+                    mLogger.WriteLine("");
+                    if ("n" == inputed_command)
                     {
                         break;
                     }
@@ -186,10 +195,11 @@ namespace Corpus
 
                     throw;
                 }
-                Console.WriteLine(output);
-                Console.Write("Continue?(y/n): ");
-                string c = Console.ReadLine();
-                if ("y" == c)
+                mLogger.WriteLine(output);
+                mLogger.Write("Continue?(y/n): ");
+                string str = Console.ReadLine();
+                mLogger.WriteLine(str);
+                if ("y" == str)
                 {
                     goon = true;
                 }
