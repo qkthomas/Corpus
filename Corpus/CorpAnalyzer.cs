@@ -19,7 +19,7 @@ namespace Corpus
             string line;
             while((line = file.ReadLine()) != null)
             {
-                string str_in_process = TraimNoneAlphabetChars(line);
+                string str_in_process = TrimNoneAlphabetChars(line);
                 if (2 <= str_in_process.Length)
                 {
                     List<Tuple<char, char>> bigrams = BuildBigramsFromString(str_in_process);
@@ -30,7 +30,7 @@ namespace Corpus
             return cops;
         }
 
-        private static string TraimNoneAlphabetChars(string input_line)
+        private static string TrimNoneAlphabetChars(string input_line)
         {
             input_line.ToLower();   //convert all characters in input_line to lower case.
             string output_line;
@@ -69,7 +69,8 @@ namespace Corpus
 
         public static string AnalyzeTextFromCorporas(List<Corpora> lst_cops, string inputed_text)
         {
-            List<Tuple<char, char>> bigrams_to_be_analyzed = BuildBigramsFromString(inputed_text);
+            string processed_input_line = TrimNoneAlphabetChars(inputed_text);
+            List<Tuple<char, char>> bigrams_to_be_analyzed = BuildBigramsFromString(processed_input_line);
             Tuple<string, double> pair_highest_language_score = Tuple.Create<string, double>("", double.MinValue);
             foreach(Corpora cops in lst_cops)
             {
