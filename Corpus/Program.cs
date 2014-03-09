@@ -18,8 +18,8 @@ namespace Corpus
         {
             while (true)
             {
-                Console.WriteLine("Enter 1 to Generate Corporas From Text Files");
-                Console.WriteLine("Enter 2 to Analyze Some Sentences");
+                Console.WriteLine("Enter 1 to Generate Corporas From Text Files to a Choosen Folder");
+                Console.WriteLine("Enter 2 to Analyze Some Sentences From Corporas Files");
                 Console.WriteLine("Enter 3 to Exit");
                 Console.Write("Please Enter Your Chose: ");
                 string inputed_command = Console.ReadLine();
@@ -103,13 +103,18 @@ namespace Corpus
 
         static void FuncSerializeCorporaFiles(List<Corpora> lst_cops)
         {
-            foreach(Corpora cops in lst_cops)
+            FolderBrowserDialog browseFolderToSaveCorporas = new FolderBrowserDialog();
+            if (browseFolderToSaveCorporas.ShowDialog() == DialogResult.OK)
             {
-                XmlSerializer ser = new XmlSerializer(typeof(Corpora));
-                string filename = cops.Language + ".xml";
-                TextWriter writer = new StreamWriter(filename);
-                ser.Serialize(writer, cops);
-                writer.Close();
+                string folder_path = browseFolderToSaveCorporas.SelectedPath + @"\";
+                foreach (Corpora cops in lst_cops)
+                {
+                    XmlSerializer ser = new XmlSerializer(typeof(Corpora));
+                    string filename = cops.Language + ".xml";
+                    TextWriter writer = new StreamWriter(folder_path + filename);
+                    ser.Serialize(writer, cops);
+                    writer.Close();
+                } 
             }
         }
 
