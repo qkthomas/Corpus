@@ -81,7 +81,9 @@ namespace Corpus
                     char second_char = bigram.Item2;
                     double prob = cops.ProbabilityOfBigram(first_char, second_char);
                     //do some output here
+                    Console.Write(cops.Language + ": Probability of Bigram " + bigram + " = " + prob + " ==> ");
                     score += Math.Log10(prob);
+                    Console.WriteLine("log prob of sequence so far: " + score);
                 }
                 if (score >= pair_highest_language_score.Item2)
                 {
